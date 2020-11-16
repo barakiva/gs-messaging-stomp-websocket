@@ -41,6 +41,7 @@ function showGreeting(message) {
 }
 
 $(function () {
+    console.log("Hello world")
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
