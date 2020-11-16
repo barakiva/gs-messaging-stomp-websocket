@@ -22,7 +22,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
             registry
                     .addHandler(new ChatHandler(), "/chat")
-                    .setAllowedOrigins("*");
+                    .setAllowedOrigins("*")
+                    .withSockJS();
     }
     class ChatHandler extends TextWebSocketHandler {
         private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();

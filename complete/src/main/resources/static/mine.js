@@ -1,18 +1,32 @@
 
-const server = "ws://localhost:8080/chat";
+// const server = "ws://localhost:8080/chat";
+const server = "http://localhost:8080/chat";
 
-const socket = new WebSocket(server);
+const socket = new SockJS(server);
+const stompClient = Stomp.over(socket);
 
-socket.onopen = (event) => {
-    console.log("Connection opened");
-    socket.send("Hello server!");
-}
-socket.onmessage = (event) => {
- console.log(event.data);
-}
-// socket.onclose = (event) => {
-//     console.log("Connection closed")
-// }
-$(document).ready(()=> {
-   console.log("Hello dom");
+stompClient.connect({},(frame) => {
+    stompClient.subscribe("/topic/questions", (msg) => {
+        console.log("Received : " + msg);
+    });
+    stompClient.send("Hello server!");
+}, (err) => {
+    console.log("Stomp protocol error" + err);
 });
+
+function sendMessage() {
+    console.log("Send message : " + $("message").val());
+    stompClient.send("/topic/questions", {}, JSON.stringify({'name': $("#message").val()}));
+}
+
+function showGreeting(message) {
+    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+}
+$(function () {
+    $("#msgForm").on('submit', (e) => {
+        e.preventDefault();
+    });
+    $('#send').click(()=> {
+        sendMessage();
+    })
+})

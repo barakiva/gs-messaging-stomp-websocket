@@ -6,20 +6,22 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-//@Configuration
-//@EnableWebSocketMessageBroker
+@Configuration
+@EnableWebSocketMessageBroker
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
-//	@Override
-//	public void configureMessageBroker(MessageBrokerRegistry config) {
-//		config.enableSimpleBroker("/topic");
-//		config.setApplicationDestinationPrefixes("/app");
-//	}
-//
-//	@Override
-//	public void registerStompEndpoints(StompEndpointRegistry registry) {
-//		registry.addEndpoint("/gs-guide-websocket").withSockJS();
-//	}
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry config) {
+		config
+                .setApplicationDestinationPrefixes("/app")
+                .enableSimpleBroker("/topic", "/queue");
+
+	}
+
+	@Override
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		registry.addEndpoint("/questions").withSockJS();
+	}
 
 
 }
