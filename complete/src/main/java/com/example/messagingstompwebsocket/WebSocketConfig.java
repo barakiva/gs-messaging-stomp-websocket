@@ -35,7 +35,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
         @Override
         public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-            System.out.println("Client has sent : " + message.getPayload().toString() );
+            System.out.println("Client has sent : " + message.getPayload().toString());
             sessions.stream()
                     .filter(WebSocketSession::isOpen)
                     .forEach(sessions -> {

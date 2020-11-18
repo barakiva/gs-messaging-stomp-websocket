@@ -16,7 +16,7 @@ stompClient.connect({},(frame) => {
 
 function sendMessage() {
     console.log("Send message : " + $("message").val());
-    stompClient.send("/topic/questions", {}, JSON.stringify({'name': $("#message").val()}));
+    stompClient.send("/app/questions", {}, JSON.stringify({'name': $("#message").val()}));
 }
 
 function showGreeting(message) {
